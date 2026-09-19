@@ -36,8 +36,9 @@ jobs:
     timeout-minutes: 60
     strategy:
       fail-fast: false
+      # java-kotlin + ruby dropped (ruby = CocoaPods Podfile only, no extractable source): Flutter host stubs only (Kotlin needs a Gradle+Flutter build; build-mode none extracts nothing → fatal 'no source code seen')
       matrix:
-        language: [actions, c-cpp, python]  # java-kotlin (144B) + ruby (Podfile only) have no analyzable code → finalize fatal
+        language: [actions, c-cpp, python]
     steps:
       - uses: actions/checkout@v4
       - uses: github/codeql-action/init@v3
