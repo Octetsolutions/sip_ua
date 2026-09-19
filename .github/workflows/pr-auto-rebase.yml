@@ -1,0 +1,20 @@
+# .github/workflows/pr-auto-rebase.yml -- CALLER: DO NOT EDIT LOGIC HERE
+# Logic lives in the ONE canonical copy: Octet-Public/octet-workflows/.github/workflows/pr-auto-rebase.yml
+name: pr-auto-rebase
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    types: [opened, reopened, synchronize]
+  workflow_dispatch: {}
+permissions:
+  contents: write
+  pull-requests: write
+jobs:
+  rebase:
+    uses: Octet-Public/octet-workflows/.github/workflows/pr-auto-rebase.yml@cbe6934164a90ab8104c0a96e4acb9c5061e0198  # v2.0.0
+    with:
+      skip_commit_prefixes: |
+        bone-marrow auto-sync
+        kos-sync reconcile
+        auto-settle
