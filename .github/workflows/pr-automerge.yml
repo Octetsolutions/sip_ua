@@ -1,0 +1,33 @@
+# pr-automerge caller — Octetsolutions standard (thin shim; logic lives in
+# Octetsolutions/.github reusable @v2). workflow_run is the load-bearing
+# post-CI trigger: check_suite events from GitHub Actions suites do NOT fire
+# workflows, so without it labelled PRs only merged on the (throttled) cron.
+name: pr-automerge
+
+on:
+  pull_request:
+    types: [opened, labeled, synchronize, reopened, ready_for_review]
+  check_suite:
+    types: [completed]
+  workflow_run:
+    workflows: ["ci", "CI", "Dart", "dart"]
+    types: [completed]
+  schedule:
+    - cron: '17,47 * * * *'
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  pull-requests: write
+  checks: read
+  actions: read
+
+jobs:
+  automerge:
+    uses: Octetsolutions/.github/.github/workflows/pr-automerge.yml@v2
+    secrets:
+      AUTOMERGE_APP_TOKEN: ${{ secrets.AUTOMERGE_APP_TOKEN }}
+    with:
+      required_checks: '[]'
+      merge_method: squash
+      base_ci_workflow: ''

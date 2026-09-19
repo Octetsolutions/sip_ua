@@ -37,7 +37,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        language: [actions, c-cpp, java-kotlin, python, ruby]
+        language: [actions, c-cpp, python]  # java-kotlin (144B) + ruby (Podfile only) have no analyzable code → finalize fatal
     steps:
       - uses: actions/checkout@v4
       - uses: github/codeql-action/init@v3
