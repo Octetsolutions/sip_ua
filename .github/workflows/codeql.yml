@@ -36,8 +36,9 @@ jobs:
     timeout-minutes: 60
     strategy:
       fail-fast: false
+      # java-kotlin dropped: Flutter host stubs only (Kotlin needs a Gradle+Flutter build; build-mode none extracts nothing → fatal 'no source code seen')
       matrix:
-        language: [actions, c-cpp, java-kotlin, python, ruby]
+        language: [actions, c-cpp, python, ruby]
     steps:
       - uses: actions/checkout@v4
       - uses: github/codeql-action/init@v3
