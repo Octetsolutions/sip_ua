@@ -1,0 +1,6 @@
+# gitleaks fingerprint baseline — pre-existing findings accepted when the gate was adopted.
+# Each line is commit:file:rule:line, so it suppresses exactly ONE historical finding and
+# nothing else: a NEW secret (new commit/line) still fails the scan. Reviewed 2026-09-20 —
+# every entry is a false positive (env-var references, lockfile hashes, vendored code,
+# test fixtures, docs/examples, public config ids), not a live credential.
+99b5f64f5e441d64d52a68d283cf970d8d2181f4:test/grammar_parser_test.dart:generic-api-key:212
