@@ -24,7 +24,7 @@ permissions:
 
 jobs:
   automerge:
-    uses: Octet-Public/octet-workflows/.github/workflows/pr-automerge.yml@cbe6934164a90ab8104c0a96e4acb9c5061e0198  # v2.0.0 (revert — v2.2.1 SHA fails to resolve cross-org: "workflow was not found")
+    uses: Octet-Public/octet-workflows/.github/workflows/pr-automerge.yml@0cbef284ad8e39009672585cfa1ebb69bb7e3b0d  # v2.3.0
     secrets:
       AUTOMERGE_APP_ID: ${{ secrets.AUTOMERGE_APP_ID }}
       AUTOMERGE_APP_PRIVATE_KEY: ${{ secrets.AUTOMERGE_APP_PRIVATE_KEY }}
