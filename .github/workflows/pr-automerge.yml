@@ -24,11 +24,11 @@ permissions:
 
 jobs:
   automerge:
-    uses: Octet-Public/octet-workflows/.github/workflows/pr-automerge.yml@5b382ddd1950cd22fb750b731ee4229fc160f709  # v2.2.1
+    uses: Octet-Public/octet-workflows/.github/workflows/pr-automerge.yml@0cbef284ad8e39009672585cfa1ebb69bb7e3b0d  # v2.3.0
     secrets:
       AUTOMERGE_APP_ID: ${{ secrets.AUTOMERGE_APP_ID }}
       AUTOMERGE_APP_PRIVATE_KEY: ${{ secrets.AUTOMERGE_APP_PRIVATE_KEY }}
     with:
       required_checks: '[]'
       merge_method: squash
-      base_ci_workflow: ''
+      base_ci_workflow: 'dart.yml'
