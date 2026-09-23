@@ -24,7 +24,7 @@ permissions:
 
 jobs:
   automerge:
-    uses: Octet-Public/octet-workflows/.github/workflows/pr-automerge.yml@ebd81fe56b97b70d11321cac4cfe74b9d66a1c88  # no-op merge guard (post-v2.3.0)
+    uses: Octet-Public/octet-workflows/.github/workflows/pr-automerge.yml@768c8bbf525a99c09a872467d02f24fc812c6e47  # v2.5.0
     secrets:
       AUTOMERGE_APP_ID: ${{ secrets.AUTOMERGE_APP_ID }}
       AUTOMERGE_APP_PRIVATE_KEY: ${{ secrets.AUTOMERGE_APP_PRIVATE_KEY }}
