@@ -12,7 +12,7 @@ permissions:
   pull-requests: write
 jobs:
   rebase:
-    uses: Octet-Public/octet-workflows/.github/workflows/pr-auto-rebase.yml@cbe6934164a90ab8104c0a96e4acb9c5061e0198  # v2.0.0
+    uses: Octet-Public/octet-workflows/.github/workflows/pr-auto-rebase.yml@d7a0c4b0cec6e441ed10d89488487f8a368759b0  # v2.8.3
     with:
       skip_commit_prefixes: |
         bone-marrow auto-sync
