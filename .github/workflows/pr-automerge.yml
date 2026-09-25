@@ -7,15 +7,14 @@ name: pr-automerge
 on:
   pull_request:
     types: [opened, labeled, synchronize, reopened, ready_for_review]
-  check_suite:
-    types: [completed]
+  # Re-fire when required CI workflows complete.
   workflow_run:
-    workflows: ["ci", "CI", "Dart", "dart"]
+    workflows: ["CodeQL", "Build", "gitleaks"]
     types: [completed]
+  # Safety-net sweep (2026-09-25, replaces check_suite fan-out).
   schedule:
-  - cron: '17,47 * * * *'
-  workflow_dispatch: {}
-
+    - cron: '*/15 * * * *'
+  workflow_dispatch:
 permissions:
   contents: write
   pull-requests: write
