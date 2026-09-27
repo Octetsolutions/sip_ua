@@ -7,6 +7,9 @@ on:
   pull_request:
     types: [opened, reopened, synchronize]
   workflow_dispatch: {}
+concurrency:
+  group: pr-auto-rebase-${{ github.event.pull_request.number || github.event.workflow_run.head_branch || github.ref }}
+  cancel-in-progress: true
 permissions:
   contents: write
   pull-requests: write
