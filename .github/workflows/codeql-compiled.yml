@@ -36,9 +36,25 @@ jobs:
       - name: flutter pub get
         working-directory: example
         run: flutter pub get
-      - name: flutter build ios (debug, no codesign)
+      # `flutter build ios` (previously used here) drives Xcode via `xcrun xcodebuild`
+      # internally, and `xcrun` strips DYLD_INSERT_LIBRARIES before exec'ing xcodebuild
+      # -- so CodeQL's tracer never sees the compiler invocations even though the build
+      # itself succeeds (PR#20 CI: "CodeQL could not process any code written in
+      # Swift", exit 32, despite a clean `✓ Built .../Runner.app`).
+      # `--config-only` gets Flutter to generate everything xcodebuild needs (Podfile
+      # lock, Flutter/Generated.xcconfig, engine artifacts, `pod install`) WITHOUT
+      # invoking xcodebuild itself, so the real build+trace step below calls
+      # `xcodebuild` directly (never through xcrun) and keeps the tracer's env intact.
+      - name: flutter build ios --config-only (generate Xcode project, no build)
         working-directory: example
-        run: flutter build ios --no-codesign --debug
+        run: flutter build ios --config-only --no-codesign --debug
+      - name: xcodebuild (direct, traced -- do not wrap in xcrun)
+        working-directory: example/ios
+        run: |
+          xcodebuild -workspace Runner.xcworkspace -scheme Runner \
+            -configuration Debug -sdk iphoneos -destination generic/platform=iOS \
+            CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY="" \
+            build
       - uses: github/codeql-action/analyze@v3
         with:
           category: "/language:swift"
