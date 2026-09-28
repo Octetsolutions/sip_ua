@@ -9,13 +9,13 @@ on:
   workflow_dispatch: {}
 concurrency:
   group: pr-auto-rebase-${{ github.event.pull_request.number || github.event.workflow_run.head_branch || github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: false
 permissions:
   contents: write
   pull-requests: write
 jobs:
   rebase:
-    uses: Octet-Public/octet-workflows/.github/workflows/pr-auto-rebase.yml@d7a0c4b0cec6e441ed10d89488487f8a368759b0  # v2.8.3
+    uses: Octet-Public/octet-workflows/.github/workflows/pr-auto-rebase.yml@a60c14cb1281d616c27075443aa817b2f9224d00  # v2.17.1
     with:
       skip_commit_prefixes: |
         bone-marrow auto-sync
