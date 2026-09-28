@@ -39,9 +39,16 @@ jobs:
     timeout-minutes: 60
     strategy:
       fail-fast: false
-      # java-kotlin + ruby dropped (ruby = CocoaPods Podfile only, no extractable source): Flutter host stubs only (Kotlin needs a Gradle+Flutter build; build-mode none extracts nothing → fatal 'no source code seen')
+      # java-kotlin + ruby stay OUT of this matrix regardless of the "full scan every
+      # PR/push/schedule" policy revert above: ruby has zero extractable source in
+      # this repo (CocoaPods Podfile only, not a .rb file), and the one Kotlin file
+      # (Flutter host stub) needs a real Gradle+Flutter build -- build-mode none
+      # extracts nothing for either, which CodeQL treats as a fatal 'no source code
+      # seen' configuration error (PR#18 CI: analyze (java-kotlin), analyze (ruby)).
+      # The policy revert is about the skip-logic (run unconditionally), not the
+      # language list -- adding these two back re-broke CI without adding coverage.
       matrix:
-        language: [actions, c-cpp, python, java-kotlin, ruby]
+        language: [actions, c-cpp, python]
     steps:
       - uses: actions/checkout@v4
       - uses: github/codeql-action/init@v3
